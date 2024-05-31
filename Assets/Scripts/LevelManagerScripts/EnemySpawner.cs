@@ -19,8 +19,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("Events")]
     public static UnityEvent onEnemyDestroy = new UnityEvent();
 
-
-    private int currentWave = 1;
+    public static int currentWave = 1;
     private float timeSinceLastSpawn;
     private int enemiesAlive;
     private int enemiesLeftToSpawn;
@@ -33,7 +32,6 @@ public class EnemySpawner : MonoBehaviour
     private void Start(){
         StartCoroutine(StartWave());
     }
-
     private void Update(){
         if(!isSpawning) {return;}
 
@@ -50,16 +48,12 @@ public class EnemySpawner : MonoBehaviour
             EndWave();
         }
     }
-
     private void EndWave(){
         isSpawning = false;
         timeSinceLastSpawn = 0f;
         currentWave++;
         StartCoroutine(StartWave());
     }
-
-
-
     //to initiate each wave
     private IEnumerator StartWave(){
         yield return new WaitForSeconds(timeBetweenWaves);
@@ -73,16 +67,11 @@ public class EnemySpawner : MonoBehaviour
     }
 
     private int EnemiesPerWave() {
-        //meant to spawn more enemies as the rounds increase
+        Health.hitPoints += Mathf.RoundToInt(2 * Mathf.Pow(currentWave, exponentialFactor));
         return Mathf.RoundToInt(baseEnemies * Mathf.Pow(currentWave, exponentialFactor));
     }
 
     private void  EnemyDestroyed(){
         enemiesAlive--;
     }
-
-    
-    
-
-
 }

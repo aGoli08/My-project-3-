@@ -22,14 +22,22 @@ public class LevelManager : MonoBehaviour
     private void Start(){
         currency = 625;
         score = 0;
+        healthPoints = 100;
     }
-    //my method
+    //my method, increases the score whenever a enemy is killed
     public void scoreIncrease(int points){
         score += points;
     }
-    //my method
+    //referenced in enemy movement, decreases health when enemy makes it past all towers
+    public void healthDecrease(int hP){
+        healthPoints -= hP;
+    }
+    //if the players healthpoints are completely depleted, will end the game
     public void isGameOver(){
-        
+        if(healthPoints <= 0){
+            Debug.Log("GAME OVER");
+           
+        }
     }
 
 
@@ -43,7 +51,7 @@ public class LevelManager : MonoBehaviour
             return true;
         }
         else{
-            Debug.Log("Not ENough" + currency);
+            Debug.Log("Not Enough" + currency);
             return false;
         }
 

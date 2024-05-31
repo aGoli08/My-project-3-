@@ -6,11 +6,12 @@ public class EnemyMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    
 
     //values responsible for modify the characteristics of the enemy
 
     [Header("Attributes")]
-    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] public static float moveSpeed = 2f;
 
     //the point that the enemy is traveling to, this will be changed after point is reached so that it moves on to the next point
     private Transform target;
@@ -28,6 +29,7 @@ public class EnemyMovement : MonoBehaviour
             if(pathIndex == LevelManager.main.path.Length){
                 EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject);
+                LevelManager.main.healthDecrease(2);
                 return;
             }
             //so that the target does not become a null value
